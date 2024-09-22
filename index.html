@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no"">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
     <title>Nicholas Sight Words</title>
     <style>
         body {
@@ -16,7 +16,7 @@
             background-color: #f0f0f0;
         }
         #word-display {
-            font-size: 96px;
+            font-size: 88px;
             text-align: center;
             padding: 20px;
             background-color: white;
@@ -118,7 +118,7 @@
             updateProgress();
 
             if (index === words.length - 1) {
-                displayMessage("End of list reached! Continuing to next cycle.");
+                displayMessage("Finished. Goob Job!");
             }
         }
 
@@ -147,6 +147,11 @@
         // Initial shuffle and display
         shuffleArray(shuffledWords);
         displayWord(currentIndex);
+
+		// Stop zooming on mobile
+		document.addEventListener('dblclick', function(event) {
+		  event.preventDefault();
+		}, { passive: false });
     </script>
 </body>
 </html>
