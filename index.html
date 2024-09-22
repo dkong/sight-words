@@ -14,7 +14,6 @@
             height: 100vh;
             margin: 0;
             background-color: #f0f0f0;
-            cursor: pointer;
         }
         #word-display {
             font-size: 96px;
@@ -24,6 +23,7 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
             margin-bottom: 20px;
+            min-width: 300px;
         }
         #message {
             font-size: 24px;
@@ -32,6 +32,7 @@
             opacity: 0;
             transition: opacity 0.5s ease-in-out;
             margin-bottom: 20px;
+            height: 30px;
         }
         #progress-container {
             width: 300px;
@@ -51,11 +52,22 @@
             color: #333;
             margin-bottom: 20px;
         }
-        #instruction {
-            position: absolute;
-            bottom: 20px;
+        #navigation {
+            display: flex;
+            gap: 20px;
+        }
+        button {
             font-size: 18px;
-            color: #666;
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
         }
     </style>
 </head>
@@ -66,51 +78,16 @@
         <div id="progress-bar"></div>
     </div>
     <div id="progress-text"></div>
+    <div id="navigation">
+        <button id="back-btn">Back</button>
+        <button id="forward-btn">Forward</button>
+    </div>
 
+    <script src="words.js"></script>
     <script>
-		const words = ["I", "a", "no", "go", "so",
-		"we", "be", "he", "she", "see",
-		"at", "as", "has", "an", "can",
-		"and", "had", "by", "my", "the",
-		"is", "his", "in", "it", "its",
-		"if", "did", "him", "will", "with",
-		"on", "not", "long", "get", "when",
-		"been", "then", "them", "their", "there",
-		"up", "but", "number", "do", "to",
-		"into", "you", "two", "one", "have",
-		"than", "that", "this", "they", "other",
-		"or", "for", "our", "more", "was",
-		"day", "way", "man", "what", "which",
-		"who", "come", "some", "of", "said",
-		"make", "made", "like", "time", "use",
-		"write", "these", "people", "each", "find",
-		"all", "call", "now", "how", "down",
-		"out", "about", "could", "would", "look",
-		"water", "her", "were", "are", "part",
-		"oil", "from", "first", "many", "word",
-		"map", "man", "hand", "land", "plan",
-		"plant", "stand", "back", "black", "happened",
-		"ask", "add", "after", "animal", "along",
-		"across", "fast", "last", "passed", "travel",
-		"big", "still", "miss", "list", "little",
-		"wind", "river", "listen", "give", "live",
-		"end", "well", "tell", "spell", "let",
-		"set", "red", "men", "help", "second",
-		"next", "best", "left", "step", "very",
-		"went", "letter", "better", "together", "never",
-		"off", "got", "dog", "song", "top",
-		"stop", "rock", "problem", "products", "want",
-		"us", "under", "until", "run", "sun",
-		"cut", "just", "must", "upon", "hundred",
-		"both", "another", "mother", "father", "without",
-		"something", "through", "thought", "boy", "world",
-		"name", "same", "came", "state", "face",
-		"space", "place", "page", "table", "take",
-		"line", "give", "life", "side", "mile",
-		"fire", "those", "home", "close", "waves"]
-
-        let currentWords = [...words];
-        let wordsShown = 0;
+        let currentIndex = 0;
+        let shuffledWords = [...words];
+        let cycleCount = 0;
 
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
@@ -119,7 +96,7 @@
             }
         }
 
-        function displayMessage(text, duration = 2000) {
+        function displayMessage(text, duration = 30000) {
             const messageEl = document.getElementById('message');
             messageEl.textContent = text;
             messageEl.style.opacity = '1';
@@ -131,35 +108,45 @@
         function updateProgress() {
             const progressBar = document.getElementById('progress-bar');
             const progressText = document.getElementById('progress-text');
-            const wordsShownInCurrentCycle = wordsShown % words.length || words.length;
-            const progress = (wordsShownInCurrentCycle / words.length) * 100;
+            const progress = ((currentIndex + 1) / words.length) * 100;
             progressBar.style.width = `${progress}%`;
-            progressText.textContent = `Words: ${wordsShownInCurrentCycle} / ${words.length}`;
+            progressText.textContent = `Words: ${currentIndex + 1} / ${words.length} (Cycle: ${cycleCount + 1})`;
         }
 
-        function displayNextWord() {
-            if (currentWords.length === 1) {
-                const lastWord = currentWords.pop();
-                document.getElementById('word-display').textContent = lastWord;
-                wordsShown++;
-                updateProgress();
-                displayMessage("End of list reached! Reshuffling...");
-                currentWords = [...words];
-                shuffleArray(currentWords);
-            } else {
-                const word = currentWords.pop();
-                document.getElementById('word-display').textContent = word;
-                wordsShown++;
-                updateProgress();
+        function displayWord(index) {
+            document.getElementById('word-display').textContent = shuffledWords[index];
+            updateProgress();
+
+            if (index === words.length - 1) {
+                displayMessage("End of list reached! Continuing to next cycle.");
             }
         }
 
-        // Initial display
-        shuffleArray(currentWords);
-        displayNextWord();
+        function goForward() {
+            currentIndex = (currentIndex + 1) % words.length;
+            if (currentIndex === 0) {
+                cycleCount++;
+                shuffleArray(shuffledWords);
+                displayMessage("Starting list again!");
+            }
+            displayWord(currentIndex);
+        }
 
-        // Add click event listener to the body
-        document.body.addEventListener('click', displayNextWord);
+        function goBack() {
+            currentIndex = (currentIndex - 1 + words.length) % words.length;
+            if (currentIndex === words.length - 1) {
+                cycleCount = Math.max(0, cycleCount - 1);
+                displayMessage("Moved back to previous cycle.");
+            }
+            displayWord(currentIndex);
+        }
+
+        document.getElementById('forward-btn').addEventListener('click', goForward);
+        document.getElementById('back-btn').addEventListener('click', goBack);
+
+        // Initial shuffle and display
+        shuffleArray(shuffledWords);
+        displayWord(currentIndex);
     </script>
 </body>
 </html>
