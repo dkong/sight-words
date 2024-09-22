@@ -110,7 +110,7 @@
             const progressText = document.getElementById('progress-text');
             const progress = ((currentIndex + 1) / words.length) * 100;
             progressBar.style.width = `${progress}%`;
-            progressText.textContent = `Words: ${currentIndex + 1} / ${words.length} (Cycle: ${cycleCount + 1})`;
+            progressText.textContent = `Words: ${currentIndex + 1} / ${words.length}`;
         }
 
         function displayWord(index) {
@@ -118,7 +118,8 @@
             updateProgress();
 
             if (index === words.length - 1) {
-                displayMessage("Finished. Goob Job!");
+                const msg = praise[Math.floor(Math.random() * praise.length)];
+                displayMessage(msg);
             }
         }
 
@@ -127,7 +128,6 @@
             if (currentIndex === 0) {
                 cycleCount++;
                 shuffleArray(shuffledWords);
-                displayMessage("Starting list again!");
             }
             displayWord(currentIndex);
         }

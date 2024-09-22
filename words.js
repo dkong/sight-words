@@ -38,3 +38,17 @@ const words = ["I", "a", "no", "go", "so",
 "space", "place", "page", "table", "take",
 "line", "give", "life", "side", "mile",
 "fire", "those", "home", "close", "waves"];
+
+const praise = [
+  "Good job!",
+  "Amazing!",
+  "Well done!",
+  "Great work!",
+  "Bravo!",
+  "Wow!",
+  "Fantastic!",
+  "Outstanding!",
+  "Incredible!",
+  "Way to go!",
+  "Nice job!",
+];
