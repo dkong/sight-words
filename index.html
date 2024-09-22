@@ -1,197 +1,87 @@
 <!DOCTYPE html>
-<html>
-
-<!-- 
-/*
- * ----------------------------------------------------------------------------
- * "THE BEER-WARE LICENSE" (Revision 42):
- * <stephen@williams-cloud.com> wrote this file.  As long as you retain this notice you
- * can do whatever you want with this stuff. If we meet some day, and you think
- * this stuff is worth it, you can buy me a beer in return.
- * ----------------------------------------------------------------------------
- */
-
- -->
-
-<title>Sight Words</title>
-<style type="text/css">
-body {
-  margin: 0;
-  background-color: #595959;
-}
-
-.olcenter
-{
- text-align: left;
- margin-left: 45%;
-}
-
-.button {
-  background-color: #70000c;
-  text-align: center;
-  color: white;
-  text-align: center;
-  height:50vh;
-  width:50vh;
-  font-size: 10vh; 
-  border-style: solid;
-  display:block;
-  margin: 0 auto;
-}
-
-button.active.focus, button.active:focus,
-button.focus, button:active.focus, 
-button:active:focus, button:focus {
-  outline: none;
-}
-
-
-/*Stole this for the apply notification.
-/* The applynotifi - position it at the bottom and in the middle of the screen */
-#applynotifi {
-  visibility: hidden; /* Hidden by default. Visible on click */
-  min-width: 250px; /* Set a default minimum width */
-  margin-left: -125px; /* Divide value of min-width by 2 */
-  background-color: #333; /* Black background color */
-  color: #fff; /* White text color */
-  text-align: center; /* Centered text */
-  border-radius: 2px; /* Rounded borders */
-  padding: 16px; /* Padding */
-  position: fixed; /* Sit on top of the screen */
-  z-index: 1; /* Add a z-index if needed */
-  left: 50%; /* Center the applynotifi */
-  bottom: 30px; /* 30px from the bottom */
-}
-
-/* Show the applynotifi when clicking on a button (class added with JavaScript) */
-#applynotifi.show {
-  visibility: visible; /* Show the applynotifi */
-  /* Add animation: Take 0.5 seconds to fade in and out the applynotifi.
-  However, delay the fade out process for 2.5 seconds */
-  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
-  animation: fadein 0.5s, fadeout 0.5s 2.5s;
-}
-
-/* Animations to fade the applynotifi in and out */
-@-webkit-keyframes fadein {
-  from {bottom: 0; opacity: 0;}
-  to {bottom: 30px; opacity: 1;}
-}
-
-@keyframes fadein {
-  from {bottom: 0; opacity: 0;}
-  to {bottom: 30px; opacity: 1;}
-}
-
-@-webkit-keyframes fadeout {
-  from {bottom: 30px; opacity: 1;}
-  to {bottom: 0; opacity: 0;}
-}
-
-@keyframes fadeout {
-  from {bottom: 30px; opacity: 1;}
-  to {bottom: 0; opacity: 0;}
-}
-/*End of the apply notification.
-
-</style>
-
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Click to Change Random Word</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            cursor: pointer;
+        }
+        #word-display {
+            font-size: 48px;
+            text-align: center;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        #message {
+            font-size: 24px;
+            color: #4CAF50;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        #instruction {
+            position: absolute;
+            bottom: 20px;
+            font-size: 18px;
+            color: #666;
+        }
+    </style>
+</head>
 <body>
-<h1><center>Sight word flash cards</center></h1>
-<button type="button" id=sightbutton class="button" onclick="newsight()">
-Click for a sight word!</button>
-<center>
-<font size="5">
-Updated on 6/7/2023.
-<br><br>
-<details>
-  <summary>Show all the site words added</summary>
-  <ol class="olcenter">
-  <div id=hide>This will be filled with the sight words on page load.</div>
-  </ol>
-</details>
-<br><br>
-</font>
-<div id="applynotifi">New words replaced.</div>
+    <div id="word-display"></div>
+    <div id="message"></div>
+    <div id="instruction">Click anywhere to change the word</div>
 
-</center>
+    <script>
+        const words = ['Hello', 'World', 'JavaScript', 'HTML', 'CSS', 'Programming', 'Web', 'Development', 'Coding', 'Fun'];
+        let currentWords = [...words];
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function displayMessage(text, duration = 30000) {
+            const messageEl = document.getElementById('message');
+            messageEl.textContent = text;
+            messageEl.style.opacity = '1';
+            setTimeout(() => {
+                messageEl.style.opacity = '0';
+            }, duration);
+        }
+
+        function displayNextWord() {
+            if (currentWords.length === 0) {
+                displayMessage("End of list reached! Reshuffling...");
+                currentWords = [...words];
+                shuffleArray(currentWords);
+            }
+            
+            const word = currentWords.pop();
+            document.getElementById('word-display').textContent = word;
+        }
+
+        // Initial shuffle and display
+        shuffleArray(currentWords);
+        displayNextWord();
+
+        // Add click event listener to the body
+        document.body.addEventListener('click', displayNextWord);
+    </script>
 </body>
-<script>
-var sight = ["I", "a", "no", "go", "so",
-"we", "be", "he", "she", "see",
-"at", "as", "has", "an", "can",
-"and", "had", "by", "my", "the",
-"is", "his", "in", "it", "its",
-"if", "did", "him", "will", "with",
-"on", "not", "long", "get", "when",
-"been", "then", "them", "their", "there",
-"up", "but", "number", "do", "to",
-"into", "you", "two", "one", "have",
-"than", "that", "this", "they", "other",
-"or", "for", "our", "more", "was",
-"day", "way", "man", "what", "which",
-"who", "come", "some", "of", "said",
-"make", "made", "like", "time", "use",
-"write", "these", "people", "each", "find",
-"all", "call", "now", "how", "down",
-"out", "about", "could", "would", "look",
-"water", "her", "were", "are", "part",
-"oil", "from", "first", "many", "word",
-"map", "man", "hand", "land", "plan",
-"plant", "stand", "back", "black", "happened",
-"ask", "add", "after", "animal", "along",
-"across", "fast", "last", "passed", "travel",
-"big", "still", "miss", "list", "little",
-"wind", "river", "listen", "give", "live",
-"end", "well", "tell", "spell", "let",
-"set", "red", "men", "help", "second",
-"next", "best", "left", "step", "very",
-"went", "letter", "better", "together", "never",
-"off", "got", "dog", "song", "top",
-"stop", "rock", "problem", "products", "want",
-"us", "under", "until", "run", "sun",
-"cut", "just", "must", "upon", "hundred",
-"both", "another", "mother", "father", "without",
-"something", "through", "thought", "boy", "world",
-"name", "same", "came", "state", "face",
-"space", "place", "page", "table", "take",
-"line", "give", "life", "side", "mile",
-"fire", "those", "home", "close", "waves"]
-
-let sortedsight = sight.sort();
-var sortedlst = sortedsight.map(i => '<li>' + i);
-var sortedlst = sortedlst.join("</li>");
-document.getElementById("hide").innerHTML = sortedlst;
-
-function newsight() {
-    var onesight = sight[Math.floor(Math.random()*sight.length)];
-    document.getElementById("sightbutton").innerHTML = onesight;
-    }
-
-function changewords (form) {
-    var inputValue = form.inputbox.value;
-        inputValue = inputValue.replace(/\s/g, '');
-        inputValue = inputValue.replace("<", '');
-        inputValue = inputValue.replace(">", '');
-        inputValue = inputValue.split(',');
-    sight = inputValue;
-        let sortedsight = sight.sort();
-        var sortedlst = sortedsight.map(i => '<li>' + i);
-        var sortedlst = sortedlst.join("</li>");
-        document.getElementById("hide").innerHTML = sortedlst;
-        myFunction();
-}
-
-
-function myFunction() {
-  // Get the applynotifi DIV
-  var x = document.getElementById("applynotifi");
-
-  // Add the "show" class to DIV
-  x.className = "show";
-
-  // After 3 seconds, remove the show class from DIV
-  setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
-}
-</script>
 </html>
