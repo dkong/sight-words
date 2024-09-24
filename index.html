@@ -85,6 +85,11 @@
 
     <script src="words.js"></script>
     <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const list = urlParams.get('q') || "all";
+
+        words = terms[list]
+
         let currentIndex = 0;
         let shuffledWords = [...words];
         let cycleCount = 0;
