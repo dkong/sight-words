@@ -1,4 +1,5 @@
 const terms = {
+
 "all" : [
   "I", "a", "no", "go", "so",
   "we", "be", "he", "she", "see",
@@ -40,40 +41,34 @@ const terms = {
   "space", "place", "page", "table", "take",
   "line", "give", "life", "side", "mile",
   "fire", "those", "home", "close", "waves"
-  ],
-"n" : [
-   "had", "his", "its", "if", "did", "him", "will", "with",
-   "when", "been", "then", "them", "their", "there",
-  "into", "have", "than", "that", "this", "they", "other",
-  "or", "for", "our", "more", "was",
-  "day", "way", "what", "which",
-  "who", "come", "some", "of", "said",
-  "make", "made", "like", "time", "use",
-  "write", "these", "people", "each", "find",
-  "all", "call", "now", "how", "down",
-  "out", "about", "could", "would", "look",
-  "water", "her", "were", "are", "part",
-  "oil", "from", "first", "many", "word",
-   "hand", "land", "plan",
-  "plant", "stand", "back", "black", "happened",
-  "ask",  "after", "animal", "along",
-  "across", "fast", "last", "passed", "travel",
-  "big", "still", "miss", "list", "little",
-  "wind", "river", "listen", "give", "live",
-  "end", "well", "tell", "spell", "let",
-  "set", "red", "men", "help", "second",
+  ]
+
+"new" : [
+ "with",
+ "when",
+"their", "there",
+  "than",
+  "what", "which",
+  "who",
+"would",
+  "man"
+  "stand", "back", "black", "happened",
+  "along",
+  "across",
+  "listen",
+  "well", "tell", "let",
+  "men", "help", "second",
   "next", "best", "left", "step", "very",
   "went", "letter", "better", "together", "never",
-  "off", "got", "dog", "song", "top",
-  "stop", "rock", "problem", "products", "want",
-  "us", "under", "until", "run", "sun",
-  "cut", "just", "must", "upon", "hundred",
+  "off", "got",
+  "stop", "want",
+  "under", "until",
+  "upon", "hundred",
   "both", "another", "mother", "father", "without",
-  "something", "through", "thought", "boy", "world",
-  "name", "same", "came", "state", "face",
-  "space", "place", "page", "table", "take",
-  "line", "give", "life", "side", "mile",
-  "fire", "those", "home", "close", "waves"
+  "something", "through", "thought", "world",
+  "state", "face",
+  "take",
+  "those", "home",
   ]
 }
 
