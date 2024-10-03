@@ -41,7 +41,7 @@ const terms = {
   "space", "place", "page", "table", "take",
   "line", "give", "life", "side", "mile",
   "fire", "those", "home", "close", "waves"
-  ]
+  ],
 
 "new" : [
  "with",
@@ -69,7 +69,7 @@ const terms = {
   "state", "face",
   "take",
   "those", "home",
-  ]
+  ],
 }
 
 
